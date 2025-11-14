@@ -1,0 +1,652 @@
+# -*- co<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Choose Your Pain</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%);
+      color: #e5e7eb;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 460px;
+      background: rgba(15, 23, 42, 0.98);
+      border-radius: 16px;
+      padding: 20px 18px 18px;
+      border: 1px solid #1e293b;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .app-header {
+      margin-bottom: 14px;
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .identity {
+      font-size: 13px;
+      color: #a5b4fc;
+      margin-bottom: 8px;
+    }
+
+    .mantra-box {
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(15, 118, 110, 0.15);
+      border: 1px solid rgba(34, 197, 194, 0.3);
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .mantra-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #67e8f9;
+      margin-bottom: 4px;
+    }
+
+    .mantra-text {
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .mantra-button {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      cursor: pointer;
+      border: 1px solid #22c55e55;
+    }
+
+    .mantra-button:active {
+      transform: scale(0.96);
+    }
+
+    .section {
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .section-sub {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+
+    .stat-card {
+      flex: 1;
+      background: #020617;
+      border-radius: 10px;
+      padding: 10px 12px;
+      border: 1px solid #1f2937;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .stat-value {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .stat-caption {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 70px;
+      border-radius: 10px;
+      border: 1px solid #374151;
+      padding: 8px 10px;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 13px;
+      resize: vertical;
+      outline: none;
+    }
+
+    textarea::placeholder {
+      color: #6b7280;
+    }
+
+    .quick-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+
+    .chip {
+      border-radius: 999px;
+      border: 1px solid #374151;
+      padding: 5px 10px;
+      font-size: 11px;
+      background: #020617;
+      color: #e5e7eb;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .chip:hover {
+      border-color: #4b5563;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+
+    button {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      background: #1f2937;
+      color: #e5e7eb;
+      width: 100%;
+    }
+
+    button.primary {
+      background: #4f46e5;
+    }
+
+    button.secondary {
+      background: #111827;
+      border: 1px solid #4b5563;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .log-card {
+      background: #020617;
+      border: 1px solid #1f2937;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-top: 4px;
+    }
+
+    .log-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .log-label {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .log-minutes-input {
+      width: 70px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .log-minutes-input::placeholder {
+      color: #6b7280;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+    }
+
+    .encouragement-box {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #e5e7eb;
+    }
+
+    .encouragement-strong {
+      font-weight: 600;
+      color: #a5b4fc;
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .today-date {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- HEADER -->
+    <div class="app-header">
+      <div class="title">Choose Your Pain</div>
+      <div class="identity">
+        “My life moves forward when I choose pain on purpose.”
+      </div>
+
+      <div class="mantra-box">
+        <div class="mantra-label">Mantra</div>
+        <div class="mantra-text" id="mantraText">
+          Most people train their brain all day to escape discomfort. You’re training yours to face it.
+        </div>
+        <button class="mantra-button" onclick="nextMantra()">New</button>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="section">
+      <div class="section-title">Your scoreboard</div>
+      <div class="section-sub">
+        These numbers are proof you’re not living like the majority.
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Current streak</div>
+          <div class="stat-value" id="streakValue">0</div>
+          <div class="stat-caption">Days in a row you chose pain on purpose.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total pain days</div>
+          <div class="stat-value" id="totalDaysValue">0</div>
+          <div class="stat-caption">Days in your life you did this, not just thought about it.</div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Total pain hours</div>
+          <div class="stat-value" id="totalHoursValue">0.0</div>
+          <div class="stat-caption">Lifetime hours of chosen discomfort that moved you forward.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Last completed</div>
+          <div class="stat-value" id="lastDateValue">—</div>
+          <div class="stat-caption">Last day you followed through.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TODAY'S PAIN -->
+    <div class="section">
+      <div class="section-title">1. Today’s chosen pain</div>
+      <div class="section-sub">
+        Pick one hard, useful thing. This matters more than any scroll today.
+      </div>
+
+      <textarea id="painText" placeholder="Example: 90 minutes deep work on EWS with my phone in another room."></textarea>
+
+      <div class="quick-buttons">
+        <div class="chip" onclick="setQuickPain('60–90 minutes of deep work with my phone in another room.')">Deep work</div>
+        <div class="chip" onclick="setQuickPain('Full workout: warm-up + main sets, no useless phone time between sets.')">Workout</div>
+        <div class="chip" onclick="setQuickPain('1 hour focused AI/ML study for my career, no social media.')">Study / Skill</div>
+        <div class="chip" onclick="setQuickPain('30–45 minutes cleaning and organizing my room / desk / laptop.')">Clean & organize</div>
+      </div>
+
+      <div class="button-row">
+        <button class="primary" onclick="saveTodayPain()">Save today’s pain</button>
+        <button class="secondary" onclick="clearTodayPain()">Clear</button>
+      </div>
+
+      <div class="today-date" id="todayDisplay"></div>
+    </div>
+
+    <!-- LOGGING -->
+    <div class="section">
+      <div class="section-title">2. Log today’s effort</div>
+      <div class="section-sub">
+        Be honest. This only works if you don’t lie to yourself.
+      </div>
+
+      <div class="log-card">
+        <div class="log-label">How long did you actually do your chosen pain today?</div>
+
+        <div class="log-row">
+          <div class="quick-buttons">
+            <div class="chip" onclick="addQuickMinutes(15)">+15 min</div>
+            <div class="chip" onclick="addQuickMinutes(30)">+30 min</div>
+            <div class="chip" onclick="addQuickMinutes(45)">+45 min</div>
+            <div class="chip" onclick="addQuickMinutes(60)">+60 min</div>
+          </div>
+        </div>
+
+        <div class="log-row">
+          <span style="font-size: 12px; color:#e5e7eb;">Manual minutes:</span>
+          <input id="manualMinutesInput" class="log-minutes-input" type="number" min="0" step="5" placeholder="e.g. 90" />
+          <span style="font-size: 11px; color:#6b7280;">(You can use quick buttons + manual.)</span>
+        </div>
+
+        <div class="log-row">
+          <span style="font-size: 12px; color:#e5e7eb;">Total minutes to log today:</span>
+          <span style="font-size: 14px; font-weight:600;" id="sessionMinutesDisplay">0</span>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="phoneAwayCheckbox" />
+          <label for="phoneAwayCheckbox">I kept my phone away / on DND during this block.</label>
+        </div>
+
+        <div class="button-row" style="margin-top: 6px;">
+          <button class="primary" onclick="markTodayDone()">Mark today as done</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENCOURAGEMENT -->
+    <div class="encouragement-box" id="encouragementText">
+      <span class="encouragement-strong">Perspective:</span>
+      Most people never track a single hour of chosen discomfort. You’re building a quiet, unfair advantage.
+    </div>
+
+    <div class="footer-note">
+      All data is stored locally in your browser (localStorage). No accounts, no sync. Just you and your numbers.
+    </div>
+  </div>
+
+  <script>
+    // ---- Storage keys ----
+    const STORAGE_PAIN_TEXT = "painApp_todayText";
+    const STORAGE_PAIN_DATE = "painApp_todayDate";
+    const STORAGE_STREAK = "painApp_streak";
+    const STORAGE_LAST_DONE = "painApp_lastDoneDate";
+    const STORAGE_TOTAL_DAYS = "painApp_totalDays";
+    const STORAGE_TOTAL_MINUTES = "painApp_totalMinutes";
+
+    // ---- Elements ----
+    const painTextEl = document.getElementById("painText");
+    const streakValueEl = document.getElementById("streakValue");
+    const totalDaysValueEl = document.getElementById("totalDaysValue");
+    const totalHoursValueEl = document.getElementById("totalHoursValue");
+    const lastDateValueEl = document.getElementById("lastDateValue");
+    const todayDisplayEl = document.getElementById("todayDisplay");
+
+    const sessionMinutesDisplayEl = document.getElementById("sessionMinutesDisplay");
+    const manualMinutesInputEl = document.getElementById("manualMinutesInput");
+    const phoneAwayCheckboxEl = document.getElementById("phoneAwayCheckbox");
+    const encouragementEl = document.getElementById("encouragementText");
+    const mantraTextEl = document.getElementById("mantraText");
+
+    // ---- Session minutes (for today log) ----
+    let sessionMinutes = 0;
+
+    // ---- Mantras ----
+    const mantras = [
+      "Most people train their brain all day to escape discomfort. You’re training yours to face it.",
+      "Comfort now is debt. Pain now is investment.",
+      "The majority will live and die scrolling. You’re practicing the opposite, one day at a time.",
+      "Almost nobody can tell you how many hours of chosen pain they’ve done. You can.",
+      "You’re not trying to feel better. You’re trying to become someone better.",
+      "Every honest minute of chosen struggle compounds in ways you won’t see until later.",
+      "The difference between you and most people is what you choose when it’s uncomfortable.",
+      "This is not punishment. This is you taking ownership of your life.",
+      "Your future self is quietly watching what you choose today.",
+      "Most people don’t track their effort because it reminds them of their excuses. You’re tracking yours.",
+      "You don’t hate your phone. You hate what happens when it controls you.",
+      "This kind of effort doesn’t show up on Instagram, but it shows up in your life.",
+      "One day of chosen pain means something. One hundred days makes you unrecognizable.",
+      "You’re building a habit that almost nobody around you has.",
+      "When it gets uncomfortable, remember: this is the part that separates you from the crowd.",
+      "Nobody will ever see most of these hours. You will live the result of them."
+    ];
+
+    const encouragements = [
+      "Most people never track a single hour of chosen discomfort. You’re building a quiet, unfair advantage.",
+      "You’re not asking life to be easier. You’re becoming stronger on purpose.",
+      "Every time you log real effort here, you’re doing something the majority will never do consistently.",
+      "You’re teaching your brain that when things are hard, you move toward them, not away.",
+      "This scoreboard is private, but its impact will be public in your life.",
+      "You’re building a backbone, not just a to-do list.",
+      "Total hours of chosen pain is a number very few people on earth could write down honestly.",
+      "Most people wait to ‘feel ready’. You move first and let the feelings catch up."
+    ];
+
+    function randomFromArray(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function nextMantra() {
+      mantraTextEl.textContent = randomFromArray(mantras);
+    }
+
+    function setEncouragementRandom() {
+      encouragementEl.innerHTML =
+        `<span class="encouragement-strong">Perspective:</span> ${randomFromArray(encouragements)}`;
+    }
+
+    // ---- Date helpers ----
+    function getDateString(dateObj) {
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const d = String(dateObj.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function getTodayString() {
+      return getDateString(new Date());
+    }
+
+    function getYesterdayString() {
+      const d = new Date();
+      d.setDate(d.getDate() - 1);
+      return getDateString(d);
+    }
+
+    function formatDisplayDate(iso) {
+      if (!iso) return "—";
+      const [y, m, d] = iso.split("-");
+      return `${d}/${m}/${y.slice(2)}`;
+    }
+
+    function updateTodayDisplay() {
+      const today = new Date();
+      const options = { weekday: "short", year: "numeric", month: "short", day: "numeric" };
+      const formatted = today.toLocaleDateString(undefined, options);
+      todayDisplayEl.textContent = `Today: ${formatted}`;
+    }
+
+    // ---- State loading ----
+    function loadState() {
+      const today = getTodayString();
+      const storedPain = localStorage.getItem(STORAGE_PAIN_TEXT);
+      const storedPainDate = localStorage.getItem(STORAGE_PAIN_DATE);
+
+      if (storedPain && storedPainDate === today) {
+        painTextEl.value = storedPain;
+      } else {
+        painTextEl.value = "";
+      }
+
+      const storedStreak = parseInt(localStorage.getItem(STORAGE_STREAK) || "0", 10);
+      const storedTotalDays = parseInt(localStorage.getItem(STORAGE_TOTAL_DAYS) || "0", 10);
+      const storedTotalMinutes = parseInt(localStorage.getItem(STORAGE_TOTAL_MINUTES) || "0", 10);
+      const lastDone = localStorage.getItem(STORAGE_LAST_DONE);
+
+      streakValueEl.textContent = String(storedStreak);
+      totalDaysValueEl.textContent = String(storedTotalDays);
+      totalHoursValueEl.textContent = (storedTotalMinutes / 60).toFixed(1);
+      lastDateValueEl.textContent = lastDone ? formatDisplayDate(lastDone) : "—";
+
+      sessionMinutes = 0;
+      updateSessionMinutesDisplay();
+
+      nextMantra();
+      setEncouragementRandom();
+      updateTodayDisplay();
+    }
+
+    // ---- Today’s pain actions ----
+    function setQuickPain(text) {
+      painTextEl.value = text;
+      saveTodayPain(false);
+    }
+
+    function saveTodayPain(showAlert = true) {
+      const value = painTextEl.value.trim();
+      if (!value) {
+        if (showAlert) alert("Write at least one clear sentence for today’s chosen pain.");
+        return;
+      }
+      const today = getTodayString();
+      localStorage.setItem(STORAGE_PAIN_TEXT, value);
+      localStorage.setItem(STORAGE_PAIN_DATE, today);
+      if (showAlert) {
+        alert("Today’s pain saved. Now go live it, not just write it.");
+      }
+    }
+
+    function clearTodayPain() {
+      painTextEl.value = "";
+      localStorage.removeItem(STORAGE_PAIN_TEXT);
+      localStorage.removeItem(STORAGE_PAIN_DATE);
+    }
+
+    // ---- Logging minutes ----
+    function updateSessionMinutesDisplay() {
+      sessionMinutesDisplayEl.textContent = String(sessionMinutes);
+    }
+
+    function addQuickMinutes(mins) {
+      sessionMinutes += mins;
+      updateSessionMinutesDisplay();
+    }
+
+    function markTodayDone() {
+      // Include manual minutes if any
+      const manualVal = parseInt(manualMinutesInputEl.value || "0", 10);
+      if (!isNaN(manualVal) && manualVal > 0) {
+        sessionMinutes += manualVal;
+      }
+
+      if (sessionMinutes <= 0) {
+        alert("Add at least some minutes (quick buttons or manual) before marking today as done.");
+        return;
+      }
+
+      const today = getTodayString();
+      const yesterday = getYesterdayString();
+
+      let streak = parseInt(localStorage.getItem(STORAGE_STREAK) || "0", 10);
+      let totalDays = parseInt(localStorage.getItem(STORAGE_TOTAL_DAYS) || "0", 10);
+      let totalMinutes = parseInt(localStorage.getItem(STORAGE_TOTAL_MINUTES) || "0", 10);
+      const lastDone = localStorage.getItem(STORAGE_LAST_DONE);
+
+      // Update streak and totalDays if not already counted today
+      if (lastDone === today) {
+        // Already counted today as a day, just add minutes
+      } else if (lastDone === yesterday) {
+        streak = streak + 1;
+        totalDays = totalDays + 1;
+      } else {
+        streak = 1;
+        totalDays = totalDays + 1;
+      }
+
+      totalMinutes += sessionMinutes;
+
+      localStorage.setItem(STORAGE_STREAK, String(streak));
+      localStorage.setItem(STORAGE_TOTAL_DAYS, String(totalDays));
+      localStorage.setItem(STORAGE_TOTAL_MINUTES, String(totalMinutes));
+      localStorage.setItem(STORAGE_LAST_DONE, today);
+
+      streakValueEl.textContent = String(streak);
+      totalDaysValueEl.textContent = String(totalDays);
+      totalHoursValueEl.textContent = (totalMinutes / 60).toFixed(1);
+      lastDateValueEl.textContent = formatDisplayDate(today);
+
+      // Reset session fields
+      sessionMinutes = 0;
+      manualMinutesInputEl.value = "";
+      phoneAwayCheckboxEl.checked = false;
+      updateSessionMinutesDisplay();
+
+      const phoneNote = phoneAwayCheckboxEl.checked
+        ? "You also trained yourself to live without constant phone stimulation. That’s rare."
+        : "Next time, try keeping your phone away. That’s where the gap with most people really opens.";
+
+      encouragementEl.innerHTML =
+        `<span class="encouragement-strong">Logged.</span> You’re now at ${streak} day(s) in a row, ${totalDays} total pain day(s), and ${(totalMinutes / 60).toFixed(1)} hours of chosen discomfort. ${phoneNote}`;
+
+      alert("Today is on the scoreboard. Most people never even start one like this.");
+      setEncouragementRandom();
+    }
+
+    // ---- Init ----
+    loadState();
+  </script>
+</body>
+</html>
+ding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+
